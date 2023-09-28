@@ -7,6 +7,11 @@ import json
 from .models import RoomMember
 from django.views.decorators.csrf import csrf_exempt
 
+def home(request):
+    return render(request,'home.html')
+
+
+
 def createToken(request):
     appId='32f225c65f34478f9bbee0e0e68dd341'
     appCertificate='92dd985e0ca2495ab21eeae4400d4f2b'
@@ -24,9 +29,6 @@ def createToken(request):
         
         
     
-
-def home(request):
-    return render(request,'index.html')
 
 
 def lobby(request):
