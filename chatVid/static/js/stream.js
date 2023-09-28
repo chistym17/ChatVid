@@ -1,6 +1,6 @@
 const App_Id='32f225c65f34478f9bbee0e0e68dd341'
 const CHANNEL='main'
-const TOKEN='007eJxTYDj67OYDQTMtJUPtO3EMK1cxp67dWe41Yb3C1OK1h3JmvipUYDA2SjMyMk02M00zNjExt0izTEpKTTUAQjOLlBRjE8MqBeHUhkBGBmWZLGZGBggE8VkYchMz8xgYABWbHbw='
+const TOKEN='007eJxTYOgLjfZJXnJi1i+r/yUqDyVCvi/dmdMUL5/1J0qG14V9cZcCg7FRmpGRabKZaZqxiYm5RZplUlJqqgEQmlmkpBibGDYqiqY2BDIytEaqsDAyQCCIz8KQm5iZx8AAABJ+Hag='
 
 console.log('connected')
 
@@ -13,7 +13,7 @@ let UID
 const Join_And_Display=async()=>
 {
 client.on('user-published',handleUserJoin)
-
+client.on('user-left',handleUserleft)
 
 UID=await client.join(App_Id,CHANNEL,TOKEN,null)
 
@@ -72,4 +72,68 @@ user.audioTrack.play()
 
 }
 
+const handleUserleft=async(user)=>{
+
+delete remoteusers[user.UID]
+document.getElementById(`user-container-${user.UID}`).remove
+
+}
 Join_And_Display()
+
+
+
+
+const leaveStream=async()=>
+{
+for(let i=0;i<localtracks.length;i++)
+{
+localtracks[i].stop()
+localtracks[i].close()
+
+}
+await client.leave()
+window.open('/','_self')
+}
+
+const toggleCamera=async(e)=>
+{
+if(localtracks[1].muted)
+{
+await localtracks[1].setMuted(false)
+e.target.style.backgroundColor='#fff'
+
+}
+else
+{
+await localtracks[1].setMuted(true)
+e.target.style.backgroundColor='rgb(255, 80, 80, 1)'
+
+}
+
+
+
+}
+
+const toggleMic=async(e)=>
+{
+if(localtracks[0].muted)
+{
+await localtracks[0].setMuted(false)
+e.target.style.backgroundColor='#fff'
+
+}
+else
+{
+await localtracks[0].setMuted(true)
+e.target.style.backgroundColor='rgb(255, 80, 80, 1)'
+
+}
+
+
+
+}
+
+
+document.getElementById('leave-btn').addEventListener('click',leaveStream)
+document.getElementById('camera-btn').addEventListener('click',toggleCamera)
+document.getElementById('mic-btn').addEventListener('click',toggleMic)
