@@ -14,14 +14,12 @@
 
             <form id="form">
                 <div class="form-field">
-                    <label>Room</label>
-                    <input type="text" name="room" placeholder="Enter room name..." style='text-transform:uppercase;'/>
+                    <input type="text" name="room" placeholder="Enter room name..." />
                 </div>
 
-                {% comment %} <div class="form-field">
-                    <label>Name</label>
-                    <input type="text" name="room" placeholder="Enter username..."/>
-                </div> {% endcomment %}
+                <div class="form-field">
+                    <input type="text" name="user" placeholder="Enter username..."/>
+                </div> 
 
                 <div class="form-field">
                     <input type="submit"  value="Join Room">
@@ -37,8 +35,8 @@ let handleSubmit=async(e)=>
 {
 e.preventDefault()
 let room=e.target.room.value.toUpperCase()
-console.log(room)
-console.log('here')
+let user=e.target.user.value
+
 let response=await fetch (`/get_token/?channel=${room}`)
 let data=await response.json()
 
@@ -48,6 +46,7 @@ let token=data.token
 sessionStorage.setItem('UID',UID)
 sessionStorage.setItem('token',token)
 sessionStorage.setItem('room',room)
+sessionStorage.setItem('user',user)
 
 window.open('../room/','_self')
 }
