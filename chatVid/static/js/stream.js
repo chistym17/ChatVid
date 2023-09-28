@@ -21,7 +21,7 @@ client.on('user-published',handleUserJoin)
 client.on('user-left',handleUserleft)
 
 try{
-await client.join(App_Id,CHANNEL,TOKEN,UID)
+UID=await client.join(App_Id,CHANNEL,TOKEN,UID)
 
 
 }
@@ -61,8 +61,9 @@ await client.subscribe(user,media_type)
 if(media_type==='video')
 {
 let player=document.getElementById (`user-container-${user.UID}`)
-if(!player==null)
-player.remove()
+  if (player != null){
+            player.remove()
+        }
 
 }
    let member = await getMember(user)
@@ -91,10 +92,9 @@ user.audioTrack.play()
 const handleUserleft=async(user)=>{
 
 delete remoteusers[user.UID]
-document.getElementById(`user-container-${user.UID}`).remove
+document.getElementById(`user-container-${user.UID}`).remove()
 
 }
-Join_And_Display()
 
 
 
@@ -183,6 +183,7 @@ let deleteMember = async () => {
 window.addEventListener("beforeunload",deleteMember);
 
 
+Join_And_Display()
 
 
 
